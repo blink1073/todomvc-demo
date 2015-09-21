@@ -14,6 +14,6 @@ npm install
 npm run build
 ```
 
-Navigate to `example`
-Start an http server (using node or python).
-Visit the url provided by the server.
+- Navigate to `example`.
+- Start an http server (using node or python).
+- Visit the url provided by the server.
