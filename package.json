@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --project example && browserify -t browserify-css example/index.js -o example/bundle.js",
-    "postinstall": "npm dedupe"
+    "postinstall": "npm dedupe && cd example && npm install"
   },
   "repository": {
     "type": "git",
