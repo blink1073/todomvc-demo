@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/blink1073/todomvc-example#readme",
   "dependencies": {
-    "phosphor-splitpanel": "^0.9.4",
     "director": "^1.2.0",
+    "phosphor-splitpanel": "^0.9.4",
+    "phosphor-widget": "^0.9.9",
     "react": "^0.13.3",
     "todomvc-app-css": "^2.0.0",
     "todomvc-common": "^1.0.1"
