@@ -38,7 +38,7 @@ class TodoWidget extends Widget {
     var render = () => {
       React.render(
         React.createElement(app.TodoApp, {model: this._model}),
-        his.node
+        this.node
       );
     }
     this._model.subscribe(render);
