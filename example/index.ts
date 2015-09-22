@@ -36,9 +36,9 @@ class TodoWidget extends Widget {
 
   onAfterAttach(msg: Message): void { 
     var render = () => {
-       React.render(
-          React.createElement(app.TodoApp, {model: this._model}),
-          this.node
+      React.render(
+        React.createElement(app.TodoApp, {model: this._model}),
+        his.node
       );
     }
     this._model.subscribe(render);
@@ -67,6 +67,5 @@ function main(): void {
 
   window.onresize = () => split.update();
 }
-
 
 window.onload = main;
