@@ -8,6 +8,10 @@
 'use strict';
 
 import {
+  Message
+} from 'phosphor-messaging';
+
+import {
   SplitPanel
 } from 'phosphor-splitpanel';
 
@@ -21,43 +25,44 @@ import './index.css';
 declare var app: any;
 
 
-function main(): void {
+class TodoWidget extends Widget {
 
-  var nWidgets = 2;
+  constructor(name: string) {
+    super();
+    this.addClass('todoapp');
+    this.addClass('content');
+    this._model = new app.TodoModel('react-todos-' + name);
+  }
+
+  onAfterAttach(msg: Message): void { 
+    var render = () => {
+       React.render(
+          React.createElement(app.TodoApp, {model: this._model}),
+          this.node
+      );
+    }
+    this._model.subscribe(render);
+    render();
+  }
+
+  private _model: any = null;
+
+}
+
+
+function main(): void {
 
   var split = new SplitPanel();
   split.id = 'main';
 
-  for (var i = 0; i < nWidgets; i++) {
-    var widget = new Widget();
-    widget.addClass('todoapp');
-    widget.addClass('content');
-    split.addChild(widget);
-  }
-  attachWidget(split, document.body);
+  var widget0 = new TodoWidget('foo');
+  var widget1 = new TodoWidget('bar');
+  split.children = [widget0, widget1];
 
-  function render(model: any, node: HTMLElement) {
-    function render() {
-      React.render(
-          React.createElement(app.TodoApp, {model: model}),
-          node
-      );
-    }
-    model.subscribe(render);
-    render();
-  }
-
-  var models: any = [];
-
-  // Wait for the JSX to load
-  setTimeout(() => { 
-    for (var i = 0; i < split.children.length; i++) {
-      var model = new app.TodoModel('react-todos-' + String(i));
-      var widget = split.childAt(i);
-      render(model, widget.node);
-      models.push(model);
-    }
-   }, 100);
+  // wait for the JSX to load
+  setTimeout(() => {
+    attachWidget(split, document.body);
+  }, 100);
 
   window.onresize = () => split.update();
 }
