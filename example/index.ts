@@ -54,6 +54,7 @@ function main(): void {
 
   var split = new SplitPanel();
   split.id = 'main';
+  split.handleSize = 5;
 
   var widget0 = new TodoWidget('foo');
   var widget1 = new TodoWidget('bar');
