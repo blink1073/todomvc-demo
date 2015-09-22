@@ -19,47 +19,45 @@ import './index.css';
 
 
 declare var app: any;
-declare var React: any;
-declare var TodoApp: any;
 
 
 function main(): void {
-  var model0 = new app.TodoModel('react-todos-0');
-  var model1 = new app.TodoModel('react-todos-1');
 
-  function render0() {
-    React.render(
-        React.createElement(app.TodoApp, {model: model0}),
-        document.getElementsByClassName('todoapp')[0]
-    );
-  }
-
-  function render1() {
-    React.render(
-        React.createElement(app.TodoApp, {model: model1}),
-        document.getElementsByClassName('todoapp')[1]
-    );
-  }
-
-  model0.subscribe(render0);
-  model1.subscribe(render1);
-
-  var todoWidget = new Widget();
-  todoWidget.addClass('todoapp');
-  todoWidget.addClass('content');
-
-  var otherWidget = new Widget();
-  otherWidget.addClass('content');
-  otherWidget.addClass('todoapp');
+  var nWidgets = 2;
 
   var split = new SplitPanel();
+  split.id = 'main';
 
-  split.children = [todoWidget, otherWidget];
-
+  for (var i = 0; i < nWidgets; i++) {
+    var widget = new Widget();
+    widget.addClass('todoapp');
+    widget.addClass('content');
+    split.addChild(widget);
+  }
   attachWidget(split, document.body);
 
-  render0();
-  render1();
+  function render(model: any, node: HTMLElement) {
+    function render() {
+      React.render(
+          React.createElement(app.TodoApp, {model: model}),
+          node
+      );
+    }
+    model.subscribe(render);
+    render();
+  }
+
+  var models: any = [];
+
+  // Wait for the JSX to load
+  setTimeout(() => { 
+    for (var i = 0; i < split.children.length; i++) {
+      var model = new app.TodoModel('react-todos-' + String(i));
+      var widget = split.childAt(i);
+      render(model, widget.node);
+      models.push(model);
+    }
+   }, 100);
 
   window.onresize = () => split.update();
 }

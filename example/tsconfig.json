@@ -5,5 +5,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES5"
-  }
+  },
+  "files": [
+     "index.ts",
+     "../typings/react/react-global.d.ts"
+   ]
 }
